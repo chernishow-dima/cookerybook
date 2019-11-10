@@ -10,7 +10,7 @@ db = client.test
 
 
 book_of_recipes_database = client["book-of-recipe"]
-book_of_recipes_collection = cookery_database["recipes"]
+book_of_recipes_collection = book_of_recipes_database["recipes"]
 
 
 @app.route('/')
