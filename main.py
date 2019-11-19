@@ -42,9 +42,7 @@ def add_recipe():
 @app.route('/edit_recipe', methods=['GET', 'POST'])
 def edit_recipe():
     if request.method == 'POST':
-        print([i for i in book_of_recipes_collection.find({"_id": ObjectId(request.get_json()["_id"])})])
-        print(request.get_json()["_id"])
-        result = book_of_recipes_collection.update_one({
+        book_of_recipes_collection.update_one({
             "_id": ObjectId(request.get_json()["_id"])
 
         }, {
