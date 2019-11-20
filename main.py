@@ -11,7 +11,7 @@ db = client.test
 
 book_of_recipes_database = client["book-of-recipe"]
 book_of_recipes_collection = book_of_recipes_database["recipes"]
-
+book_of_recipes_products = book_of_recipes_database["products"]
 
 @app.route('/')
 @app.route('/index')
@@ -55,6 +55,23 @@ def edit_recipe():
                      'photo': request.get_json()["photo"],
                      'like': request.get_json()["like"]
                      }}, upsert=False)
+    return redirect('/')
+
+@app.route('/add_products', methods=['GET', 'POST'])
+def add_products():
+    if request.method == 'POST':
+        book_of_recipes_products.insert_one({'name': request.get_json()["name"],
+                                             'category': request.get_json()["category"],
+                                             'calorie': request.get_json()["calorie"]})
+        return "Продукт добавлен"
+    return redirect('/')
+
+
+@app.route('/remove_recipe', methods=['GET', 'POST'])
+def remove_recipe():
+    if request.method == 'POST':
+        book_of_recipes_collection.delete_one({"_id": ObjectId(request.get_json()["_id"])})
+        return "Рецепт удален"
     return redirect('/')
 
 
