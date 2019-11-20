@@ -1,5 +1,5 @@
 import pymongo
-from flask import Flask, jsonify, request, redirect
+from flask import Flask, jsonify, request, redirect, flash
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
@@ -13,6 +13,7 @@ book_of_recipes_database = client["book-of-recipe"]
 book_of_recipes_collection = book_of_recipes_database["recipes"]
 book_of_recipes_products = book_of_recipes_database["products"]
 
+
 @app.route('/')
 @app.route('/index')
 def main():
@@ -21,41 +22,52 @@ def main():
 
 @app.route('/catalog')
 def show_catalog():
+    flash('Рецепт добавлен')
     return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find()]))
 
 
-@app.route('/add_recipe', methods=['GET', 'POST'])
+@app.route('/recipe', methods=['GET'])
+def get_recipe():
+    return jsonify(str(book_of_recipes_collection.find_one({'_id': ObjectId(request.args.get('id'))})))
+
+
+@app.route('/recipe', methods=['POST'])
 def add_recipe():
-    if request.method == 'POST':
-        book_of_recipes_collection.insert_one({'name': request.get_json()["name"],
-                                               'category': request.get_json()["category"],
-                                               'ingredients': request.get_json()["ingredients"],
-                                               'calorie': request.get_json()["calorie"],
-                                               'recipe': request.get_json()["recipe"],
-                                               'celebratory': request.get_json()["celebratory"],
-                                               'photo': request.get_json()["photo"],
-                                               'like': 0})
-        return "Рецепт добавлен"
-    return redirect('/')
+    request_body = request.get_json()
+    book_of_recipes_collection.insert_one({'name': request_body["name"],
+                                           'category': request_body["category"],
+                                           'ingredients': request_body["ingredients"],
+                                           'calorie': request_body["calorie"],
+                                           'recipe': request_body["recipe"],
+                                           'celebratory': request_body["celebratory"],
+                                           'photo': request_body["photo"],
+                                           'like': 0})
+    return "Рецепт добавлен"
 
 
-@app.route('/edit_recipe', methods=['GET', 'POST'])
+@app.route('/recipe', methods=['PATCH'])
 def edit_recipe():
-    if request.method == 'POST':
-        book_of_recipes_collection.update_one({
-            "_id": ObjectId(request.get_json()["_id"])
+    request_body = request.get_json()
+    book_of_recipes_collection.update_one({
+        "_id": ObjectId(request.args.get('id'))
+    }, {
+        "$set": {'name': request_body["name"],
+                 'category': request_body["category"],
+                 'ingredients': request_body["ingredients"],
+                 'calorie': request_body["calorie"],
+                 'recipe': request_body["recipe"],
+                 'celebratory': request_body["celebratory"],
+                 'photo': request_body["photo"],
+                 'like': request_body["like"]
+                 }}, upsert=False)
+    return "Рецепт изменен"
 
-        }, {
-            "$set": {'name': request.get_json()["name"],
-                     'category': request.get_json()["category"],
-                     'ingredients': request.get_json()["ingredients"],
-                     'calorie': request.get_json()["calorie"],
-                     'recipe': request.get_json()["recipe"],
-                     'celebratory': request.get_json()["celebratory"],
-                     'photo': request.get_json()["photo"],
-                     'like': request.get_json()["like"]
-                     }}, upsert=False)
-    return redirect('/')
+
+@app.route('/recipe', methods=['DELETE'])
+def del_recipe():
+    book_of_recipes_collection.delete_one({"_id": ObjectId(request.get_json()["_id"])})
+    return "Рецепт удален"
+
 
 @app.route('/add_products', methods=['GET', 'POST'])
 def add_products():
@@ -67,12 +79,6 @@ def add_products():
     return redirect('/')
 
 
-@app.route('/remove_recipe', methods=['GET', 'POST'])
-def remove_recipe():
-    if request.method == 'POST':
-        book_of_recipes_collection.delete_one({"_id": ObjectId(request.get_json()["_id"])})
-        return "Рецепт удален"
-    return redirect('/')
 
 
 if __name__ == '__main__':
