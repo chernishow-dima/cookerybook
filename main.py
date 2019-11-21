@@ -1,12 +1,17 @@
+import os
 import pymongo
 from flask import Flask, jsonify, request, redirect, flash
 from bson.objectid import ObjectId
+from dotenv import load_dotenv
+
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
-client = pymongo.MongoClient(
-    "mongodb+srv://admin:adminqwerty@book-of-recipe-mx8jr.gcp.mongodb.net/test?retryWrites=true&w=majority")
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
+
+client = pymongo.MongoClient(MONGO_URI)
 db = client.test
 
 book_of_recipes_database = client["book-of-recipe"]
@@ -20,7 +25,7 @@ def main():
     return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find()]))
 
 
-@app.route('/catalog')
+@app.route('/catalog', methods=['GET'])
 def show_catalog():
     flash('Рецепт добавлен')
     return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find()]))
@@ -77,8 +82,6 @@ def add_products():
                                              'calorie': request.get_json()["calorie"]})
         return "Продукт добавлен"
     return redirect('/')
-
-
 
 
 if __name__ == '__main__':
