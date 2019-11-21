@@ -29,12 +29,7 @@ def main():
 def show_catalog():
     request_body = request.args
 
-    def filter_catalog(category, celebratory):
-        return book_of_recipes_collection.find({'category': category,
-                                                'celebratory': celebratory})
-
-    print(type(request_body["category"]))
-        #return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find()]))
+    return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find()]))
     #else:
        # return jsonify(', '.join([str(item) for item in filter_catalog(request_body["category"], request_body["celebratory"])]))
 
