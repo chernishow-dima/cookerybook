@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
 load_dotenv()
-MONGO_URI = os.getenv("MONGO_URI")
+MONGO_URI = os.environ['MONGO_URI']
 
 client = pymongo.MongoClient(MONGO_URI)
 db = client.test
@@ -27,11 +27,8 @@ def main():
 
 @app.route('/catalog', methods=['GET'])
 def show_catalog():
-    request_body = request.args
-
     return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find()]))
-    #else:
-       # return jsonify(', '.join([str(item) for item in filter_catalog(request_body["category"], request_body["celebratory"])]))
+
 
 
 @app.route('/recipe', methods=['GET'])
