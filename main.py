@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
-load_dotenv()
+load_dotenv("venv/.env")
 MONGO_URI = os.environ.get('MONGO_URI', None)
 
 client = pymongo.MongoClient(MONGO_URI)
@@ -31,7 +31,9 @@ def main():
 def show_catalog():
     return jsonify(', '.join([str(item) for item in book_of_recipes_products.find()]))
 
+
 @app.route('/recipe', methods=['GET'])
+
 def get_recipe():
     return jsonify(str(book_of_recipes_collection.find_one({'_id': ObjectId(request.args.get('id'))})))
 
@@ -77,33 +79,38 @@ def del_recipe():
 @app.route('/add_products', methods=['GET', 'POST'])
 def add_products():
     if request.method == 'POST':
+        if book_of_recipes_products.find_one({"name": request.get_json()["name"]}) == None:
+            yandex_translate_api_string = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=" + os.environ.get("YANDEX_API_KEY", None) + "&text=" + request.get_json()["name"] + "&lang=en"
+            usda_api_search_request_string = "https://api.nal.usda.gov/fdc/v1/search?api_key=" + os.environ.get("USDA_API_KEY", None)
+            try:
+                yandex_translate_result = json.loads(requests.get(yandex_translate_api_string).content)["text"][0]
+                usda_search_result = str(int(json.loads(requests.post(usda_api_search_request_string, None,{"generalSearchInput": yandex_translate_result}).content)["foods"][0]["fdcId"]))
 
-        yandex_translate_api_string = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=" + os.environ.get("YANDEX_API_KEY", None) + "&text=" + request.get_json()["name"] + "&lang=en"
-        usda_api_search_request_string = "https://api.nal.usda.gov/fdc/v1/search?api_key=" + os.environ.get("USDA_API_KEY", None)
-        try:
-            yandex_translate_result = json.loads(requests.get(yandex_translate_api_string).content)["text"][0]
-            usda_search_result = str(int(json.loads(requests.post(usda_api_search_request_string, None,{"generalSearchInput": yandex_translate_result}).content)["foods"][0]["fdcId"]))
+                usda_api_food_inf_result = "https://api.nal.usda.gov/fdc/v1/" + usda_search_result + "?api_key=" + os.environ.get("USDA_API_KEY", None)
 
-            usda_api_food_inf_result = "https://api.nal.usda.gov/fdc/v1/" + usda_search_result + "?api_key=" + os.environ.get("USDA_API_KEY", None)
+                usda_result_energy_json = json.loads(requests.get(usda_api_food_inf_result).content)['foodNutrients']
+                usda_result_energy = '-1.0'
 
-            usda_result_energy_json = json.loads(requests.get(usda_api_food_inf_result).content)['foodNutrients']
-            usda_result_energy = '-1.0'
+                for i in range(len(usda_result_energy_json)):
+                    if usda_result_energy_json[i]["nutrient"]["name"] == 'Energy' :
+                        usda_result_energy = str(usda_result_energy_json[i]["amount"])
 
-            for i in range(len(usda_result_energy_json)):
-                if usda_result_energy_json[i]["nutrient"]["name"] == 'Energy' :
-                    usda_result_energy = str(usda_result_energy_json[i]["amount"])
-
-            if usda_result_energy == '-1.0':
+                if usda_result_energy == '-1.0':
+                    return jsonify({"result": "Please enter energy of {}".format(request.get_json()["name"]),
+                                    "name": request.get_json()["name"],
+                                    "category": request.get_json()["category"]})
+            except IndexError:
                 return jsonify({"result": "Please enter energy of {}".format(request.get_json()["name"])})
-        except IndexError:
-            return jsonify({"result": "Please enter energy of {}".format(request.get_json()["name"])})
 
-        book_of_recipes_products.insert_one({'name': request.get_json()["name"],
-                                             'category': request.get_json()["category"],
-                                             'calorie' : usda_result_energy
-                                             })
-        return jsonify({"result": "Success"})
+            book_of_recipes_products.insert_one({'name': request.get_json()["name"],
+                                                 'category': request.get_json()["category"],
+                                                 'calorie' : usda_result_energy
+                                                 })
+            return jsonify({"result": "Success"})
+        else:
+            return jsonify({"result": "This item has been recently create"})
     return redirect('/')
+
 
 
 if __name__ == '__main__':
