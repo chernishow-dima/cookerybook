@@ -97,6 +97,11 @@ def add_products():
     return redirect('/')
 
 
+@app.route('/search_by_popularity', methods=['GET'])
+def search_by_popularity():
+    return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find().sort("like", -1)]))
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
