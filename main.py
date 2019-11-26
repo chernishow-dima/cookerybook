@@ -44,7 +44,8 @@ def add_recipe():
                                            'recipe': request_body["recipe"],
                                            'celebratory': request_body["celebratory"],
                                            'photo': request_body["photo"],
-                                           'like': 0})
+                                           'like': 0,
+                                           'kitchen': request_body["kitchen"]})
     # Вернуть полученные данные + статус(201)
     return jsonify()
 
@@ -62,7 +63,8 @@ def edit_recipe():
                  'recipe': request_body["recipe"],
                  'celebratory': request_body["celebratory"],
                  'photo': request_body["photo"],
-                 'like': request_body["like"]
+                 'like': request_body["like"],
+                 'kitchen': request_body["kitchen"]
                  }}, upsert=False)
     return "Рецепт изменен"
 
