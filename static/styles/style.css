@@ -1,0 +1,239 @@
+@font-face {
+    font-family: 'Streamster';
+    src: url('../../template/fonts/Streamster.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Cinzel';
+    src: url('../../template/fonts/Cinzel.ttf') format('truetype');
+}
+
+.rb-user {
+    position: absolute;
+    width: 1440px;
+    height: 30px;
+    left: -2px;
+    top: 0px;
+
+    background: #C4C4C4;
+}
+
+.rb-logo-user {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    left: 1242px;
+    top: 0px;
+    	
+}
+
+.rb-title-site {
+    position: absolute;
+    width: 219px;
+    height: 70px;
+    left: 0px;
+    top: 30px;
+    font-family: 'Streamster';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 67px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #050505;
+    border: 0px solid #000000;	
+}
+
+.rb-title-recipe {
+    position: absolute;
+    width: 165px;
+    height: 70px;
+    left: 833px;
+    top: 30px;
+    
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #000000;
+}
+
+.rb-title-popular {
+    position: absolute;
+    width: 165px;
+    height: 70px;
+    left: 1028px;
+    top: 30px;
+    
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #000000;
+}
+
+.rb-search {
+    position: absolute;
+    width: 946px;
+    height: 40px;
+    left: 247px;
+    top: 100px;
+
+    background: #C4C4C4;
+    border-radius: 30px;
+}
+
+.rb-logo-search {
+    position: absolute;
+    width: 44.14px;
+    height: 40px;
+    left: 247px;
+    top: 100px;
+}
+
+.rb-title-search {
+    position: absolute;
+    width: 68px;
+    height: 40px;
+    left: 291px;
+    top: 100px;
+    
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #000000;
+}
+
+.rb-title-cuisine {
+    position: absolute;
+    width: 165px;
+    height: 50px;
+    left: 267px;
+    top: 158px;
+    
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #000000;
+}
+
+.rb-title-category {
+    position: absolute;
+    width: 165px;
+    height: 50px;
+    left: 453px;
+    top: 158px;
+    
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #000000;
+}
+
+.rb-title-menu {
+    position: absolute;
+    width: 165px;
+    height: 50px;
+    left: 668px;
+    top: 158px;
+    
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #000000;
+}
+
+.rb-title-ingredient {
+    position: absolute;
+    width: 165px;
+    height: 50px;
+    left: 853px;
+    top: 158px;
+    
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #000000;
+}
+
+.rb-form-pick-up {
+    position: absolute;
+    width: 165px;
+    height: 50px;
+    left: 1028px;
+    top: 158px;
+    
+    background: #FFFFFF;
+    border: 1px solid #4DF23F;
+    box-sizing: border-box;
+    border-radius: 30px;
+}
+.rb-title-pick-up {
+    position: absolute;
+    width: 165px;
+    height: 50px;
+    left: 1041px;
+    top: 158px;
+    
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #000000;
+}
+
+.rb-meet{
+    position: absolute;
+    width: 946px;
+    height: 542px;
+    left: 242px;
+    top: 266px;
+    
+    background: url(1559545632_4.jpg);
+}
