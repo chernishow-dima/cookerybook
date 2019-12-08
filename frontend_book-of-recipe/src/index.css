@@ -15,8 +15,11 @@ margin: 0;
 
 .wrapper {
     display: flex;
+    margin-left: 150px;
+    margin-right: 150px;
   }
 .logo {
+    
     font-size: 4vh;
     margin: .1em;
     padding: .3em;
