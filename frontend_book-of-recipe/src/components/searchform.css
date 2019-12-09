@@ -1,0 +1,21 @@
+.my_btn{
+  font-family: "Cinzel";
+  color: rgba(0, 0, 0, 1) !important;
+  background-color: #FFFFFF !important;
+  font-size: 12px !important;
+  line-height: 14px !important;
+  border: 1px solid #4DF23F !important;
+  box-sizing: border-box !important;
+  border-radius: 30px !important;
+}
+
+.my_btn_dd{
+  font-family: "Cinzel";
+  color: rgba(0, 0, 0, 1) !important;
+  background-color: #FFFFFF !important;
+  font-size: 12px !important;
+  line-height: 14px !important;
+  border: 1px solid rgba(0, 0, 0, 0) !important;
+  box-sizing: border-box !important;
+}
+

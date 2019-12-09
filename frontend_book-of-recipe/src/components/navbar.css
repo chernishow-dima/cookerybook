@@ -1,0 +1,32 @@
+
+.col-lg-1{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.logoContainer p{
+  width: 218px;
+  height: 70px;
+  margin: 0px;
+  font-family: 'Streamster';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 67px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-mybutton{
+  font-family: 'Cinzel';
+  font-size: 12px !important;
+  line-height: 14px !important;
+  font-style: normal;
+  font-weight: normal;
+  height: 70px;
+  width: 100%;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0);
+}

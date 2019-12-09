@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-class Header extends Component {
+import "./header.css";
+import { Container } from 'react-bootstrap';
 
+export default class Header extends Component {
     render() {
         return (
-            <React.Fragment>
-                <h1>Hello. World</h1>
-                <button>Increment</button>
-            </React.Fragment>
+            <Container bsPrefix={'header'}>
+
+            </Container>
         );
     }
 }
-
-export default Header;
