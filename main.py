@@ -109,9 +109,9 @@ def search_by_kitchen():
     return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find({"kitchen": request.get_json()["kitchen"]})]))
 
 
-@app.route('/search_by_recipe', methods=['GET'])
-def search_by_recipe(): 
-    return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find({"recipe": request.get_json()["recipe"]})]))
+@app.route('/search_by_name', methods=['GET'])
+def search_by_name(): 
+    return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find({"name": request.get_json()["name"]})]))
 
 if __name__ == '__main__':
     app.debug = True
