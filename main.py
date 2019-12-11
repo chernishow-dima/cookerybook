@@ -82,11 +82,11 @@ def add_products():
             try:
                 usda_result_energy = find_energy(request.get_json()["name"])
                 if usda_result_energy == '-1.0':
-                    return jsonify({"result": "Please enter energy of {}".format(name),
+                    return jsonify({"result": "Please enter energy of {}".format("name"),
                                     "name": request.get_json()["name"],
                                     "category": request.get_json()["category"]})
             except IndexError:
-                return jsonify({"result": "Please enter energy of {}".format(name)})
+                return jsonify({"result": "Please enter energy of {}".format("name")})
 
             book_of_recipes_products.insert_one({'name': request.get_json()["name"],
                                                  'category': request.get_json()["category"],
@@ -109,6 +109,9 @@ def search_by_kitchen():
     return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find({"kitchen": request.get_json()["kitchen"]})]))
 
 
+@app.route('/search_by_name', methods=['GET'])
+def search_by_name(): 
+    return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find({"recipe": request.get_json()["recipe"]})]))
 
 if __name__ == '__main__':
     app.debug = True
