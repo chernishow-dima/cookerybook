@@ -113,6 +113,24 @@ def search_by_kitchen():
 def search_by_name(): 
     return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find({"name": request.get_json()["name"]})]))
 
+
+@app.route('/search_by_ingredients', methods=['GET'])
+def search_by_ingredients():
+    request_body = request.get_json()
+    request_body_values = request_body.values()
+    flag =1 
+    json_output = ""
+
+    for item in book_of_recipes_collection.find() :
+        for elem in request_body_values :               
+            if elem not in item.get("ingredients").values() :
+                flag=0
+        if flag == 1 : json_output += ', '.join([str(item)])
+        flag =1   
+    return jsonify(json_output)    
+
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
