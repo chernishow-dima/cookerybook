@@ -130,6 +130,44 @@ def search_by_ingredients():
     return jsonify(json_output)    
 
 
+@app.route('/general_search', methods=['GET'])
+def general_search():
+    json_output = ""
+    array_id =[]
+    number_id = 0
+    flag = 0
+    if request.get_json()["name"] != None:
+        for item in book_of_recipes_collection.find({"name": request.get_json()["name"]}):
+            array_id.append(item.get("_id"))
+            flag = 1
+        if flag == 1 : number_id +=1
+        flag = 0    
+    if request.get_json()["category"] != None:
+        for item in book_of_recipes_collection.find({"category": request.get_json()["category"]}):
+            array_id.append(item.get("_id"))
+            flag = 1
+        if flag == 1 : number_id +=1
+        flag = 0
+    if request.get_json()["kitchen"] != None:
+        for item in book_of_recipes_collection.find({"kitchen": request.get_json()["kitchen"]}):
+            array_id.append(item.get("_id"))
+            flag = 1
+        if flag == 1 : number_id +=1
+        flag = 0  
+    if request.get_json()["celebratory"] != None:
+        for item in book_of_recipes_collection.find({"celebratory": request.get_json()["celebratory"]}):
+            array_id.append(item.get("_id"))
+            flag = 1
+        if flag == 1 : number_id +=1
+        flag = 0 
+
+    for item in book_of_recipes_collection.find():
+        if array_id.count(item.get("_id")) == number_id:
+            json_output += ', '.join([str(item)])
+
+    return jsonify(json_output)        
+
+   
 
 if __name__ == '__main__':
     app.debug = True
