@@ -167,7 +167,16 @@ def general_search():
 
     return jsonify(json_output)        
 
-   
+
+@app.route('/sort_calories_ascending', methods=['GET'])
+def sort_calories_ascending():
+    return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find().sort("calorie", 1)]))
+
+@app.route('/sort_calories_descending', methods=['GET'])
+def sort_calories_descending():
+    return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find().sort("calorie", -1)]))
+
+
 
 if __name__ == '__main__':
     app.debug = True
