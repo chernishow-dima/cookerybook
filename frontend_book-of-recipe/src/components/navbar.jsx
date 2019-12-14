@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Button, Col, Container } from "react-bootstrap"
+import { Link } from 'react-router-dom';
 import "./navbar.css"
 export default class Navbar extends Component {
     state = {}
@@ -8,9 +9,11 @@ export default class Navbar extends Component {
             <>
                 <Row>
                     <Col lg="1">
-                        <Container bsPrefix='logoContainer'>
-                            <p>ВКУС</p>
-                        </Container>
+                        <Link to="/" style={{ textDecoration: 'none' }}>
+                            <Container bsPrefix='logoContainer'>
+                                <p>ВКУС</p>
+                            </Container>
+                        </Link>
                     </Col>
                     <Col lg="8"></Col>
                     <Col lg="2"><Button variant="mybutton">ПОПУЛЯРНОЕ</Button></Col>

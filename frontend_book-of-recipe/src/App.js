@@ -1,27 +1,24 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Container } from 'react-bootstrap';
-import Header from "./components/header"
-import './App.css';
+import Start from './pages/start';
+
+import Search from './pages/search';
+import Header from './components/header';
 import Navbar from './components/navbar';
 import SearchForm from './components/searchform';
-import PopularMainItem from './components/popularmainitem'
-function App() {
+export default function App() {
   return (
-    <>
+    <Router>
       <Header />
       <Container>
         <Navbar />
         <SearchForm />
-        <PopularMainItem />
       </Container>
-      <link
-        rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-        crossOrigin="anonymous"
-      />
-    </>
+      <Switch>
+        <Route path='/search' component={Search}></Route>
+        <Route path='/' component={Start}></Route>
+      </Switch>
+    </Router>
   );
 }
-
-export default App;

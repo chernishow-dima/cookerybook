@@ -2,3 +2,29 @@
   width: 100%;
   overflow: hidden;
 }
+
+.radial-gradient::after{
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+background: radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,1));
+overflow: hidden;
+height: calc(100vh - 230px);
+}
+
+
+.carousel-inner {
+width: 100%;
+height: calc(100vh - 230px);
+}
+
+img{
+background: no-repeat;
+height: calc(100vh - 230px);
+}
+.carousel-control-prev, .carousel-control-next{
+z-index: 0 !important;
+}

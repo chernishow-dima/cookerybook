@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Select from 'react-select';
 
 import './searchform.css'
@@ -25,6 +26,7 @@ const customStyles = {
 
   control: (base, state) => ({
     ...base,
+    zIndex: 9999,
     width: "100%",
     height: "50px",
     fontFamily: 'Cinzel',
@@ -133,7 +135,11 @@ export default class SearchForm extends Component {
               onChange={this.handleChange_ingredients}
             />
           </Col>
-          <Col lg={2}><Button bsPrefix="my_btn">ПОДОБРАТЬ РЕЦЕПТЫ</Button></Col>
+          <Col lg={2}><Link to="/search">
+            <Button bsPrefix="my_btn">
+              ПОДОБРАТЬ РЕЦЕПТЫ
+            </Button>
+          </Link></Col>
           <Col lg={1}></Col>
         </Row>
       </>
