@@ -21,7 +21,7 @@ width: 100%;
 height: calc(100vh - 230px);
 }
 
-img{
+.image{
 background: no-repeat;
 height: calc(100vh - 230px);
 }

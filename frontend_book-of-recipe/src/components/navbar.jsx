@@ -16,7 +16,13 @@ export default class Navbar extends Component {
                         </Link>
                     </Col>
                     <Col lg="8"></Col>
-                    <Col lg="2"><Button variant="mybutton">ПОПУЛЯРНОЕ</Button></Col>
+                    <Col lg="2">
+                        <Link to="/recipe">
+                            <Button variant="mybutton">
+                                ПОПУЛЯРНОЕ
+                            </Button>
+                        </Link>
+                    </Col>
                     <Col lg="1"></Col>
                 </Row>
             </>

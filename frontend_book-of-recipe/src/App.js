@@ -7,6 +7,8 @@ import Search from './pages/search';
 import Header from './components/header';
 import Navbar from './components/navbar';
 import SearchForm from './components/searchform';
+import RecipeFull from './components/recipefull';
+
 export default function App() {
   return (
     <Router>
@@ -16,6 +18,7 @@ export default function App() {
         <SearchForm />
       </Container>
       <Switch>
+        <Route path='/recipe' component={RecipeFull}></Route>
         <Route path='/search' component={Search}></Route>
         <Route path='/' component={Start}></Route>
       </Switch>
