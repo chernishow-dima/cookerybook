@@ -59,19 +59,19 @@ export default function TitlebarGridList() {
     <div className={classes.root}>
       <GridList cols={3} cellHeight={200} spacing={50} className={classes.gridList}>
         {tileData.map(tile => (
-            <GridListTile key={tile.img}>
-              <img src={tile.img} alt={tile.title}/>
-              <Link to="/">
-                <GridListTileBar
-                  title={tile.title}
-                  actionIcon={
-                    <Link to="/search">
-                      <IconButton color={"secondary"} >&#10084;</IconButton>
-                    </Link>
-                  }
-                />
-              </Link>
-            </GridListTile> 
+          <GridListTile key={tile.img}>
+            <img src={tile.img} alt={tile.title} />
+            <Link to="/recipe">
+              <GridListTileBar
+                title={tile.title}
+                actionIcon={
+                  <Link to="/search">
+                    <IconButton color={"secondary"} >&#10084;</IconButton>
+                  </Link>
+                }
+              />
+            </Link>
+          </GridListTile>
         ))}
       </GridList>
     </div>
