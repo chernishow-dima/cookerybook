@@ -6,6 +6,8 @@ from bson.objectid import ObjectId
 from dotenv import load_dotenv
 
 app = Flask(__name__)
+CORS(app)
+
 app.config['JSON_AS_ASCII'] = False
 
 load_dotenv("venv/.env")
