@@ -4,6 +4,7 @@ from modules.usdaSearchEnergy import *
 from flask import Flask, jsonify, request, redirect
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
