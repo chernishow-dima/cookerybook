@@ -28,6 +28,7 @@ def main():
     for item in book_of_recipes_collection.find(limit=3).sort("like", -1):
         output.append({'_id': str(item['_id']) , 
                        'name' : item['name'],
+                       'category' : item['category'],
                        'ingredients' : item['ingredients'],
                        'calorie':item['calorie'],
                        'recipe':item['recipe'],
@@ -36,6 +37,28 @@ def main():
                        'like':item['like'],
                        'kitchen':item['kitchen']})
     return jsonify({'result' : output, 'status': 200})
+
+
+@app.route('/options', methods=['GET'])
+def get_options():
+    output_kitchens = []
+    output_categories = []
+    output_menus = []
+    output_ingredients = []
+    for item in book_of_recipes_collection.find():
+        if item['kitchen'] not in output_kitchens:
+            output_kitchens.append(item['kitchen'])
+        if item['category'] not in output_categories:
+            output_categories.append(item['category'])
+        if item['celebratory'] not in output_menus:
+            output_menus.append(item['celebratory'])
+        for ingredient in item['ingredients']:
+            if ingredient not in output_ingredients:
+                output_ingredients.append(ingredient)
+    return jsonify({'kitchens': output_kitchens,
+                    'categories' : output_categories,
+                    'menus': output_menus,
+                    'ingredients': output_ingredients})
 
 
 @app.route('/catalog', methods=['GET'])
