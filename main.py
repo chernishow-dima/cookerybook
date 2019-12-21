@@ -45,20 +45,23 @@ def get_options():
     output_categories = []
     output_menus = []
     output_ingredients = []
+    status = 200
     for item in book_of_recipes_collection.find():
         if item['kitchen'] not in output_kitchens:
             output_kitchens.append(item['kitchen'])
         if item['category'] not in output_categories:
             output_categories.append(item['category'])
-        if item['celebratory'] not in output_menus:
-            output_menus.append(item['celebratory'])
+        if item['menu'] not in output_menus:
+            output_menus.append(item['menu'])
         for ingredient in item['ingredients']:
             if ingredient not in output_ingredients:
                 output_ingredients.append(ingredient)
+    
     return jsonify({'kitchens': output_kitchens,
                     'categories' : output_categories,
                     'menus': output_menus,
-                    'ingredients': output_ingredients})
+                    'ingredients': output_ingredients,
+                    'status': status})
 
 
 @app.route('/catalog', methods=['GET'])
@@ -167,7 +170,7 @@ def search_by_ingredients():
     return jsonify(json_output)    
 
 
-@app.route('/general_search', methods=['GET'])
+@app.route('/search', methods=['GET'])
 def general_search():
     json_output = ""
     array_id =[]
