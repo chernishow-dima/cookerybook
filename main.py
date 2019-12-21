@@ -24,7 +24,18 @@ book_of_recipes_products = book_of_recipes_database["products"]
 
 @app.route('/')
 def main():
-    return jsonify(', '.join([str(item) for item in book_of_recipes_collection.find()]))
+    output = []
+    for item in book_of_recipes_collection.find(limit=3).sort("like", -1):
+        output.append({'_id': str(item['_id']) , 
+                       'name' : item['name'],
+                       'ingredients' : item['ingredients'],
+                       'calorie':item['calorie'],
+                       'recipe':item['recipe'],
+                       'celebratory':item['celebratory'],
+                       'photo':item['photo'],
+                       'like':item['like'],
+                       'kitchen':item['kitchen']})
+    return jsonify({'result' : output, 'status': 200})
 
 
 @app.route('/catalog', methods=['GET'])
