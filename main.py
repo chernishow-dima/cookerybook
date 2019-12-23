@@ -184,26 +184,25 @@ def del_recipe():
 
 @app.route('/add_products', methods=['GET', 'POST'])
 def add_products():
-    if request.method == 'POST':
-        if book_of_recipes_products.find_one({"name": request.get_json()["name"]}) is None:
-            try:
-                usda_result_energy = find_energy(request.get_json()["name"])
-                if usda_result_energy == '-1.0':
-                    return jsonify({"result": "Please enter energy of {}".format("name"),
-                                    "name": request.get_json()["name"],
-                                    "category": request.get_json()["category"]})
-            except IndexError:
-                return jsonify({"result": "Please enter energy of {}".format("name")})
+    item = book_of_recipes_products.find_one({"name": request.get_json()["name"]})
+    if item is None:
+        try:
+            usda_result_energy = find_energy(request.get_json()["name"])
+            if usda_result_energy == '-1.0':
+                return jsonify({"result": "Please enter energy of {}".format("name"),
+                                "name": request.get_json()["name"],
+                                "category": request.get_json()["category"]})
+        except IndexError:
+            return jsonify({"result": "Please enter energy of {}".format("name")})
 
-            book_of_recipes_products.insert_one({'name': request.get_json()["name"],
-                                                 'category': request.get_json()["category"],
-                                                 'calorie': usda_result_energy
-                                                 })
+        book_of_recipes_products.insert_one({'name': request.get_json()["name"],
+                                             'category': request.get_json()["category"],
+                                             'calorie': usda_result_energy
+                                             })
 
-            return jsonify({"result": "Success"})
-        else:
-            return jsonify({"result": "This item has been recently create"})
-    return redirect('/')
+        return jsonify({"result": usda_result_energy})
+    else:
+        return jsonify({"result": item['calorie']})
 
 
 @app.route('/search_by_popularity', methods=['GET'])
