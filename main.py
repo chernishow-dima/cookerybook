@@ -1,11 +1,14 @@
 import os
+import io
+import base64
 import pymongo
 from modules.usdaSearchEnergy import *
-from flask import Flask, jsonify, request, redirect
+from flask import Flask, jsonify, request, redirect, send_file
 from bson.objectid import ObjectId
+#from bson.binary import Binary
+from bson import Binary
 from dotenv import load_dotenv
 from flask_cors import CORS
-
 app = Flask(__name__)
 CORS(app)
 
@@ -20,6 +23,7 @@ db = client.test
 book_of_recipes_database = client["book-of-recipe"]
 book_of_recipes_collection = book_of_recipes_database["recipes"]
 book_of_recipes_products = book_of_recipes_database["products"]
+book_of_recipes_images = book_of_recipes_database["images"]
 
 
 @app.route('/')
@@ -370,6 +374,23 @@ def sort_calories_descending():
                        'menu':item['menu']})
     return jsonify({'result' : output, 'status': 200})
 
+@app.route('/photo/<image_id>', methods=['GET'])
+def get_photo(image_id):
+    item = book_of_recipes_images.find_one({"_id": ObjectId(image_id)})
+    print(image_id)
+    print(item)
+    return send_file(io.BytesIO(item["buffer"]), mimetype=item["mimetype"])
+
+
+@app.route('/photo', methods=['POST'])
+def set_photo():
+    content = io.BytesIO(request.files['file'].read())
+    image_id = book_of_recipes_images.insert({
+        "mimetype": request.files['file'].content_type,
+        "buffer" : Binary(content.getvalue())
+    })
+    
+    return jsonify({"image_id": str(image_id), "status" : 201})
 
 
 if __name__ == '__main__':
