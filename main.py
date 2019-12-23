@@ -66,7 +66,7 @@ def get_options():
                     'status': status})
 
 
-@app.route('/', methods=['GET'])
+@app.route('/catalog', methods=['GET'])
 def show_catalog():
     output = []
     for item in book_of_recipes_products.find():
@@ -84,7 +84,7 @@ def show_catalog():
     return jsonify({'result' : output, 'status': 200})
 
 
-@app.route('/', methods=['GET'])
+@app.route('/recipe', methods=['GET'])
 def get_recipe():      
     output = []
     print(request.get_json()["_id"])
@@ -105,7 +105,7 @@ def get_recipe():
 
 
 
-@app.route('/', methods=['POST'])
+@app.route('/recipe', methods=['POST'])
 def add_recipe():
     request_body = request.get_json()
     id_recipe= None
@@ -136,7 +136,7 @@ def add_recipe():
     
 
 
-@app.route('/', methods=['PATCH'])
+@app.route('/recipe', methods=['PATCH'])
 def edit_recipe():
     request_body = request.get_json()
     output = []
@@ -176,7 +176,7 @@ def edit_recipe():
     
 
 
-@app.route('/', methods=['DELETE'])
+@app.route('/recipe', methods=['DELETE'])
 def del_recipe():
     book_of_recipes_collection.delete_one({"_id": ObjectId(request.get_json()["_id"])})
     return jsonify({'status': 200})
@@ -206,7 +206,7 @@ def add_products():
     return redirect('/')
 
 
-@app.route('/', methods=['GET'])
+@app.route('/search_by_popularity', methods=['GET'])
 def search_by_popularity():    
     output = []
     for item in book_of_recipes_collection.find().sort("like", -1):
@@ -224,7 +224,7 @@ def search_by_popularity():
     return jsonify({'result' : output, 'status': 200})
 
 
-@app.route('/', methods=['GET'])
+@app.route('/search_by_kitchen', methods=['GET'])
 def search_by_kitchen():     
     output = []
     for item in book_of_recipes_collection.find({"kitchen": request.get_json()["kitchen"]}):
@@ -242,7 +242,7 @@ def search_by_kitchen():
     return jsonify({'result' : output, 'status': 200})
 
 
-@app.route('/', methods=['GET'])
+@app.route('/search_by_name', methods=['GET'])
 def search_by_name():     
     output = []
     for item in book_of_recipes_collection.find({"name": request.get_json()["name"]}):
@@ -260,7 +260,7 @@ def search_by_name():
     return jsonify({'result' : output, 'status': 200})
 
 
-@app.route('/', methods=['GET'])
+@app.route('/search_by_ingredients', methods=['GET'])
 def search_by_ingredients():
     request_body = request.get_json()
     request_body_values = request_body.values()
@@ -287,7 +287,7 @@ def search_by_ingredients():
     return jsonify({'result' : output, 'status': 200})      
 
 
-@app.route('/', methods=['GET'])
+@app.route('/search', methods=['GET'])
 def general_search():    
     output = []
     array_id =[]
@@ -336,7 +336,7 @@ def general_search():
       
 
 
-@app.route('/', methods=['GET'])
+@app.route('/sort_calories_ascending', methods=['GET'])
 def sort_calories_ascending():    
     output = []
     for item in book_of_recipes_collection.find().sort("calorie", 1):
@@ -354,7 +354,7 @@ def sort_calories_ascending():
     return jsonify({'result' : output, 'status': 200})
 
 
-@app.route('/', methods=['GET'])
+@app.route('/sort_calories_descending', methods=['GET'])
 def sort_calories_descending():    
     output = []
     for item in book_of_recipes_collection.find().sort("calorie", -1):
