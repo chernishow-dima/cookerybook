@@ -287,7 +287,7 @@ def search_by_ingredients():
     return jsonify({'result' : output, 'status': 200})      
 
 
-@app.route('/search', methods=['GET'])
+@app.route('/search', methods=['POST'])
 def general_search():    
     output = []
     array_id =[]
@@ -388,6 +388,7 @@ def set_photo():
     })
     
     return jsonify({"image_id": str(image_id), "status" : 201})
+
 
 
 if __name__ == '__main__':
