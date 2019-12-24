@@ -90,8 +90,7 @@ def show_catalog():
 
 @app.route('/recipe', methods=['GET'])
 def get_recipe():      
-    output = []
-    print(request.get_json()["_id"])
+    output = []    
     for item in book_of_recipes_collection.find({"_id": ObjectId(request.get_json()["_id"])}):
         output.append({'_id': str(item['_id']) , 
                        'name' : item['name'],
@@ -144,8 +143,7 @@ def add_recipe():
 def edit_recipe():
     request_body = request.get_json()
     output = []
-    id_object = ObjectId( request.get_json()["_id"])
-    print(id_object)
+    id_object = ObjectId( request.get_json()["_id"])    
     book_of_recipes_collection.update_one({
         "_id": id_object
     }, {
@@ -161,8 +159,7 @@ def edit_recipe():
                  'menu':request_body['menu']}
                  }, upsert=False)    
     
-    num_id = book_of_recipes_collection.find({ "_id": id_object }).count() 
-    print(num_id)            
+    num_id = book_of_recipes_collection.find({ "_id": id_object }).count()               
     if num_id != 0:
         output.append({'_id': str(id_object) , 
                        'name' : request_body['name'],
@@ -315,8 +312,8 @@ def general_search():
             flag = 1
         if flag == 1 : number_id +=1
         flag = 0  
-    if request.get_json()["celebratory"] != None:
-        for item in book_of_recipes_collection.find({"celebratory": request.get_json()["celebratory"]}):
+    if request.get_json()["menu"] != None:
+        for item in book_of_recipes_collection.find({"menu": request.get_json()["menu"]}):
             array_id.append(item.get("_id"))
             flag = 1
         if flag == 1 : number_id +=1
