@@ -390,6 +390,63 @@ def set_photo():
     return jsonify({"image_id": str(image_id), "status" : 201})
 
 
+
+@app.route('/increase_likes', methods=['PATCH'])
+def increase_likes():
+    output = []
+    id_object = ObjectId( request.get_json()["_id"])
+    item =  book_of_recipes_collection.find_one({"_id": id_object})        
+    book_of_recipes_collection.update_one({
+        "_id": id_object
+    }, {
+        "$set": {
+                 'like': int(item["like"]) + 1
+                }
+                }, upsert=False)        
+    
+    for item in book_of_recipes_collection.find({"_id": id_object}):
+        output.append({'_id': str(item['_id']) , 
+                       'name' : item['name'],
+                       'category' : item['category'],
+                       'ingredients' : item['ingredients'],
+                       'calorie':item['calorie'],
+                       'recipe':item['recipe'],
+                       'celebratory':item['celebratory'],
+                       'photo':item['photo'],
+                       'like':item['like'],
+                       'kitchen':item['kitchen'],
+                       'menu':item['menu']})
+    return jsonify({'result' : output, 'status': 200})
+
+
+@app.route('/reduction_likes', methods=['PATCH'])
+def reduction_likes():
+    output = []
+    id_object = ObjectId( request.get_json()["_id"])
+    item =  book_of_recipes_collection.find_one({"_id": id_object})        
+    book_of_recipes_collection.update_one({
+        "_id": id_object
+    }, {
+        "$set": {
+                 'like': int(item["like"]) - 1
+                }
+                }, upsert=False)        
+    
+    for item in book_of_recipes_collection.find({"_id": id_object}):
+        output.append({'_id': str(item['_id']) , 
+                       'name' : item['name'],
+                       'category' : item['category'],
+                       'ingredients' : item['ingredients'],
+                       'calorie':item['calorie'],
+                       'recipe':item['recipe'],
+                       'celebratory':item['celebratory'],
+                       'photo':item['photo'],
+                       'like':item['like'],
+                       'kitchen':item['kitchen'],
+                       'menu':item['menu']})
+    return jsonify({'result' : output, 'status': 200})
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
